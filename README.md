@@ -26,12 +26,6 @@ require_once get_template_directory() . '/vendor/jankx/plugin-activation/src/Boo
 
 ```json
 {
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/your-org/jankx-plugin-activation.git"
-        }
-    ],
     "require": {
         "jankx/plugin-activation": "*"
     }

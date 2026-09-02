@@ -12,14 +12,19 @@ class TextDomain
             return;
         }
 
-        $languagesDir = dirname(__DIR__, 2) . '/languages';
+        $packageLanguagesDir = dirname(__DIR__, 2) . '/languages';
+        $themeLanguagesDir = get_stylesheet_directory() . '/languages';
 
-        if (false !== strpos(__FILE__, WP_PLUGIN_DIR) || false !== strpos(__FILE__, WPMU_PLUGIN_DIR)) {
+        // Try theme languages first (for custom translations)
+        if (is_dir($themeLanguagesDir)) {
+            load_theme_textdomain('tgmpa', $themeLanguagesDir);
+        }
+
+        // Load from package languages as fallback
+        if (is_dir($packageLanguagesDir)) {
             add_action('load_textdomain_mofile', [$this, 'correctPluginMofile'], 10, 2);
-            load_theme_textdomain('tgmpa', $languagesDir);
+            load_theme_textdomain('tgmpa', $packageLanguagesDir);
             remove_action('load_textdomain_mofile', [$this, 'correctPluginMofile'], 10);
-        } else {
-            load_theme_textdomain('tgmpa', $languagesDir);
         }
     }
 
